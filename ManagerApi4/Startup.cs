@@ -1,5 +1,6 @@
 using ManagerApi4.Context;
 using ManagerApi4.Entities;
+using ManagerApi4.Filters;
 using ManagerApi4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -35,7 +36,9 @@ namespace ManagerApi4
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(config =>
+                config.Filters.Add(new HeaderFilter()
+                ));
 
             services.AddDbContext<ManagerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
